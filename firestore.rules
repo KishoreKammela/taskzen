@@ -1,0 +1,43 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isUserInOrg(orgId) {
+      return request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId;
+    }
+
+    function isOrgAdmin(orgId) {
+      return isUserInOrg(orgId) && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /organizations/{orgId} {
+      allow read: if isUserInOrg(orgId);
+      allow write: if isOrgAdmin(orgId);
+    }
+    
+    match /sprints/{sprintId} {
+      allow read, write: if isUserInOrg(resource.data.organizationId);
+    }
+
+    match /tasks/{taskId} {
+      // To read/write a task, the user must belong to the same organization as the sprint the task is in.
+      allow read, write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == get(/databases/$(database)/documents/sprints/$(request.resource.data.sprintId)).data.organizationId;
+    }
+
+    match /backlogs/{backlogId} {
+      allow read, write: if isUserInOrg(resource.data.organizationId);
+    }
+
+    match /timeTracking/{timeTrackingId} {
+      // User can only read/write their own time tracking entries
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+    }
+  }
+}
