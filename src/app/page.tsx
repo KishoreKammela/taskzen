@@ -1,3 +1,4 @@
+
 'use client';
 import { useAuth } from '@/hooks/use-auth';
 import { redirect } from 'next/navigation';
@@ -15,7 +16,7 @@ export default function HomePage() {
   }
 
   if (user) {
-    redirect('/tasks');
+    redirect('/dashboard');
   } else {
     redirect('/login');
   }

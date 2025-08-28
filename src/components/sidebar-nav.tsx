@@ -1,8 +1,19 @@
+
 'use client';
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import { ClipboardCheck, LayoutGrid, Sparkles, Settings, LifeBuoy } from 'lucide-react';
+import {
+  ClipboardCheck,
+  LayoutDashboard,
+  Calendar,
+  Box,
+  BarChart2,
+  Settings,
+  LifeBuoy,
+  LayoutGrid,
+  Sparkles,
+} from 'lucide-react';
 import {
   SidebarHeader,
   SidebarContent,
@@ -13,7 +24,15 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
 } from '@/components/ui/sidebar';
-import { projects } from '@/lib/mock-data';
+
+const mainNav = [
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/sprints', label: 'Sprints', icon: Calendar },
+  { href: '/backlog', label: 'Backlog', icon: Box },
+  { href: '/tasks', label: 'Tasks', icon: LayoutGrid },
+  { href: '/reports', label: 'Reports', icon: BarChart2 },
+  { href: '/smart-prioritization', label: 'Smart Prioritization', icon: Sparkles },
+];
 
 export default function SidebarNav() {
   const pathname = usePathname();
@@ -34,33 +53,15 @@ export default function SidebarNav() {
       </SidebarHeader>
       <SidebarContent className="p-2">
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton href="/tasks" isActive={isActive('/tasks')} tooltip="Tasks">
-              <LayoutGrid />
-              Tasks
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton href="/smart-prioritization" isActive={isActive('/smart-prioritization')} tooltip="Smart Prioritization">
-              <Sparkles />
-              Smart Prioritization
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          {mainNav.map((item) => (
+             <SidebarMenuItem key={item.href}>
+               <SidebarMenuButton href={item.href} isActive={isActive(item.href)} tooltip={item.label}>
+                 <item.icon />
+                 {item.label}
+               </SidebarMenuButton>
+             </SidebarMenuItem>
+          ))}
         </SidebarMenu>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
-          <SidebarMenu>
-            {projects.map((project) => (
-              <SidebarMenuItem key={project.id}>
-                <SidebarMenuButton href="#" tooltip={project.name}>
-                  <project.icon />
-                  {project.name}
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>

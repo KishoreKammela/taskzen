@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -7,6 +8,7 @@ import Header from '@/components/header';
 import { useAuth } from '@/hooks/use-auth';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export default function DashboardLayout({
   children,
@@ -35,16 +37,18 @@ export default function DashboardLayout({
   }
 
   return (
-    <SidebarProvider>
-      <Sidebar>
-        <SidebarNav />
-      </Sidebar>
-      <SidebarInset className="flex flex-col">
-        <Header />
-        <main className="flex-1 overflow-y-auto p-4 pt-2 md:p-6 md:pt-4">
-          {children}
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarNav />
+        </Sidebar>
+        <SidebarInset className="flex flex-col">
+          <Header />
+          <main className="flex-1 overflow-y-auto p-4 pt-2 md:p-6 md:pt-4">
+            {children}
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }
