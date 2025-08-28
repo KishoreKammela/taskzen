@@ -1,6 +1,6 @@
 
 import type { LucideIcon } from 'lucide-react';
-import type { FieldValue } from 'firebase/firestore';
+import type { FieldValue, Timestamp } from 'firebase/firestore';
 
 export type Project = {
   id: string;
@@ -16,22 +16,22 @@ export interface User {
   name?: string;
   role: 'admin' | 'member';
   organizationId: string;
-  createdAt: FieldValue;
+  createdAt: Timestamp | FieldValue;
 }
 
 export interface Organization {
   id: string;
   name: string;
   settings?: Record<string, any>;
-  createdAt: FieldValue;
+  createdAt: Timestamp | FieldValue;
 }
 
 export interface Sprint {
   id: string;
   name: string;
   goal?: string;
-  startDate: FieldValue;
-  endDate: FieldValue;
+  startDate: Timestamp | FieldValue;
+  endDate: Timestamp | FieldValue;
   status: 'planning' | 'active' | 'completed';
   organizationId: string;
   createdBy: string; // userId
@@ -49,8 +49,8 @@ export type Task = {
   dueDate?: string;
   estimatedHours?: number;
   actualHours?: number;
-  createdAt: FieldValue;
-  updatedAt: FieldValue;
+  createdAt: Timestamp | FieldValue;
+  updatedAt: Timestamp | FieldValue;
 };
 
 
@@ -64,7 +64,7 @@ export interface TimeTracking {
   id:string;
   taskId: string;
   userId: string;
-  startTime: FieldValue;
-  endTime?: FieldValue;
+  startTime: Timestamp | FieldValue;
+  endTime?: Timestamp | FieldValue;
   duration: number; // in minutes
 }
