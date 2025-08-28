@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -47,7 +48,7 @@ export default function LoginPage() {
         body: JSON.stringify({ token }),
       });
 
-      router.push('/tasks');
+      router.push('/dashboard');
     } catch (error: any) {
       toast({
         variant: 'destructive',
