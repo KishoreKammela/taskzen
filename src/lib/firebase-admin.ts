@@ -9,9 +9,10 @@ function initializeFirebaseAdmin() {
 	try {
 		// Check if app is already initialized
 		if (getApps().length > 0) {
-			console.log('Firebase Admin app already exists, using existing app');
-			adminDb = getFirestore();
-			adminAuth = getAuth();
+			console.log('Firebase Admin app already exists, using existing app.');
+			const existingApp = getApp();
+			adminDb = getFirestore(existingApp);
+			adminAuth = getAuth(existingApp);
 			return;
 		}
 
@@ -22,60 +23,49 @@ function initializeFirebaseAdmin() {
 		const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
 		const privateKey = process.env.FIREBASE_PRIVATE_KEY;
 
-		console.log('Environment variables check:');
-		console.log('- FIREBASE_PROJECT_ID:', projectId ? 'Set' : 'Not set');
-		console.log('- FIREBASE_CLIENT_EMAIL:', clientEmail ? 'Set' : 'Not set');
-		console.log('- FIREBASE_PRIVATE_KEY:', privateKey ? 'Set' : 'Not set');
-
 		if (projectId && clientEmail && privateKey) {
-			console.log('Using individual environment variables');
+			console.log('Using individual environment variables for Firebase Admin.');
 			const cleanPrivateKey = privateKey.replace(/\\n/g, '\n');
 
-			// Create the credential first
 			const credential = cert({
 				projectId,
 				clientEmail,
 				privateKey: cleanPrivateKey,
 			});
 
-			// Initialize the app with the credential
 			initializeApp({
 				credential,
 				projectId,
 			});
-			console.log('Firebase Admin initialized with individual environment variables');
+			console.log('Firebase Admin initialized with individual environment variables.');
 		} else {
-			// Fallback to application default credentials
-			console.log('Falling back to application default credentials');
+			// Fallback to application default credentials (useful in some cloud environments)
+			console.log('Falling back to application default credentials for Firebase Admin.');
 			initializeApp({
-				projectId: projectId || 'taskzen-5gpu6',
+				projectId: projectId, // Use project ID if available
 			});
-			console.log('Firebase Admin initialized with application default credentials');
+			console.log('Firebase Admin initialized with application default credentials.');
 		}
 
 		// Initialize services after successful app initialization
 		adminDb = getFirestore();
 		adminAuth = getAuth();
-		console.log('Firebase Admin services initialized successfully');
+		console.log('Firebase Admin services initialized successfully.');
 	} catch (error: any) {
 		console.error('Firebase Admin initialization failed:', error);
-		console.error('Error details:', {
-			message: error.message,
-			stack: error.stack,
-			code: error.code,
-		});
-
-		// Try to get services from existing app as last resort
+		
+		// Attempt to get services from existing app as a last resort
 		try {
 			if (getApps().length > 0) {
-				console.log('Attempting to get services from existing app...');
-				adminDb = getFirestore();
-				adminAuth = getAuth();
-				console.log('Successfully got services from existing app');
+				console.warn('Attempting to get services from existing app as a fallback...');
+				const existingApp = getApp();
+				adminDb = getFirestore(existingApp);
+				adminAuth = getAuth(existingApp);
+				console.log('Successfully got services from existing app on fallback.');
 				return;
 			}
 		} catch (fallbackError) {
-			console.error('Failed to get services from existing app:', fallbackError);
+			console.error('Failed to get services from existing app during fallback:', fallbackError);
 		}
 
 		throw new Error(`Firebase Admin SDK failed to initialize: ${error.message}`);

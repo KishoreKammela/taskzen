@@ -46,23 +46,33 @@ export default function RegisterPage() {
       // Create user document in Firestore
       await createUser(user.uid, { email: user.email! });
 
+      // Set session cookie
       await fetch('/api/auth/session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token }),
       });
+      
+      toast({
+        title: 'Registration Successful',
+        description: "Welcome! You're now being redirected to your dashboard.",
+      });
 
-      router.push('/dashboard');
-      router.refresh();
+      // Redirect after a short delay to allow the user to see the toast
+      setTimeout(() => {
+        router.push('/dashboard');
+        router.refresh();
+      }, 1000);
+
     } catch (error: any) {
       toast({
         variant: 'destructive',
         title: 'Registration Failed',
         description: error.message,
       });
-    } finally {
       setIsLoading(false);
-    }
+    } 
+    // We don't set isLoading to false in the success case because we are navigating away
   };
 
   return (
