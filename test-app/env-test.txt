@@ -1,0 +1,8 @@
+# Firebase Service Account Credentials
+# You can get these from your Firebase project settings > Service accounts > Generate new private key
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="taskzen-5gpu6"
+FIREBASE_CLIENT_EMAIL="firebase-adminsdk-fbsvc@taskzen-5gpu6.iam.gserviceaccount.com"
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCykS6DuxA/ZLio\n3aItvbb/BAi5Kgq+qd4TRJCIFXghY…GZ\nSNR121klbi31FzWzu2rvi/G6xhPlpQedHiOSWWJryoKEAqhsZNzZ1s3NEYTUINle\n1QitP0I9VX/2XPHMxXQEVsqG\n-----END PRIVATE KEY-----\n"
+FIREBASE_PRIVATE_KEY_ID="bbbc228027619f59b1c7312ad15ed56cf5d4eead"
+FIREBASE_CLIENT_ID="106829252238817937041"
+FIREBASE_CLIENT_X509_CERT_URL="https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40taskzen-5gpu6.iam.gserviceaccount.com"
