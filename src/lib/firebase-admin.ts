@@ -1,78 +1,55 @@
-import { initializeApp, getApps, getApp, cert, applicationDefault } from 'firebase-admin/app';
+import admin from 'firebase-admin';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
 
-let adminDb: ReturnType<typeof getFirestore>;
-let adminAuth: ReturnType<typeof getAuth>;
+// Define a global symbol to store the Firebase Admin app instance
+const ADMIN_APP_KEY = Symbol.for('firebase-admin-app');
 
-function initializeFirebaseAdmin() {
-	try {
-		// Check if app is already initialized
-		if (getApps().length > 0) {
-			console.log('Firebase Admin app already exists, using existing app.');
-			const existingApp = getApp();
-			adminDb = getFirestore(existingApp);
-			adminAuth = getAuth(existingApp);
-			return;
-		}
+// Define a type for our custom global object
+interface CustomGlobal extends NodeJS.Global {
+  [ADMIN_APP_KEY]?: admin.app.App;
+}
+const customGlobal = global as CustomGlobal;
 
-		console.log('Initializing Firebase Admin SDK...');
+function getAdminApp(): admin.app.App {
+  if (customGlobal[ADMIN_APP_KEY]) {
+    return customGlobal[ADMIN_APP_KEY]!;
+  }
 
-		// Use individual environment variables (more reliable than JSON parsing)
-		const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-		const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-		const privateKey = process.env.FIREBASE_PRIVATE_KEY;
+  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
+  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
 
-		if (projectId && clientEmail && privateKey) {
-			console.log('Using individual environment variables for Firebase Admin.');
-			const cleanPrivateKey = privateKey.replace(/\\n/g, '\n');
+  if (!projectId || !clientEmail || !privateKey) {
+    throw new Error(
+      'Missing Firebase Admin SDK credentials. Please check your .env.local file.'
+    );
+  }
 
-			const credential = cert({
-				projectId,
-				clientEmail,
-				privateKey: cleanPrivateKey,
-			});
-
-			initializeApp({
-				credential,
-				projectId,
-			});
-			console.log('Firebase Admin initialized with individual environment variables.');
-		} else {
-			// Fallback to application default credentials (useful in some cloud environments)
-			console.log('Falling back to application default credentials for Firebase Admin.');
-			initializeApp({
-				projectId: projectId, // Use project ID if available
-			});
-			console.log('Firebase Admin initialized with application default credentials.');
-		}
-
-		// Initialize services after successful app initialization
-		adminDb = getFirestore();
-		adminAuth = getAuth();
-		console.log('Firebase Admin services initialized successfully.');
-	} catch (error: any) {
-		console.error('Firebase Admin initialization failed:', error);
-		
-		// Attempt to get services from existing app as a last resort
-		try {
-			if (getApps().length > 0) {
-				console.warn('Attempting to get services from existing app as a fallback...');
-				const existingApp = getApp();
-				adminDb = getFirestore(existingApp);
-				adminAuth = getAuth(existingApp);
-				console.log('Successfully got services from existing app on fallback.');
-				return;
-			}
-		} catch (fallbackError) {
-			console.error('Failed to get services from existing app during fallback:', fallbackError);
-		}
-
-		throw new Error(`Firebase Admin SDK failed to initialize: ${error.message}`);
-	}
+  try {
+    const newApp = admin.initializeApp({
+      credential: admin.credential.cert({
+        projectId,
+        clientEmail,
+        privateKey,
+      }),
+      databaseURL: `https://${projectId}.firebaseio.com`,
+    });
+    customGlobal[ADMIN_APP_KEY] = newApp;
+    console.log('Firebase Admin SDK initialized successfully.');
+    return newApp;
+  } catch (error: any) {
+    if (error.code === 'auth/invalid-credential') {
+        console.error("Firebase Admin SDK initialization failed: Invalid credentials. Check your .env.local file values.");
+    } else {
+        console.error('Firebase Admin SDK initialization failed:', error);
+    }
+    throw new Error('Firebase Admin SDK failed to initialize.');
+  }
 }
 
-// Initialize immediately
-initializeFirebaseAdmin();
+const adminApp = getAdminApp();
+const adminDb = getFirestore(adminApp);
+const adminAuth = getAuth(adminApp);
 
 export { adminDb, adminAuth };
