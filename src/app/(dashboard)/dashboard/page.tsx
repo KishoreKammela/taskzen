@@ -1,5 +1,8 @@
 
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, Rocket } from 'lucide-react';
 import SprintOverview from './components/sprint-overview';
@@ -10,6 +13,8 @@ import TeamVelocity from './components/team-velocity';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function DashboardPage() {
+  const router = useRouter();
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -18,11 +23,11 @@ export default function DashboardPage() {
           <p className="text-muted-foreground">An overview of your team's progress and performance.</p>
         </div>
         <div className="flex gap-2">
-          <Button>
+          <Button onClick={() => router.push('/sprints')}>
             <Rocket className="mr-2" />
             Create Sprint
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => router.push('/tasks')}>
             <PlusCircle className="mr-2" />
             Add Task
           </Button>
