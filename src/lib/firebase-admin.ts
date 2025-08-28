@@ -1,7 +1,6 @@
 
 import * as admin from 'firebase-admin';
 
-// This is a placeholder for your service account key.
 // In a real application, you would load this from a secure environment variable.
 // For Firebase Studio, we will handle this securely.
 // DO NOT commit your service account key to your repository.
