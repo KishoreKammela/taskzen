@@ -1,4 +1,5 @@
-import { ArrowDown, ArrowRight, ArrowUp, CheckCircle2, Circle, CircleDashed, XCircle } from 'lucide-react';
+
+import { ArrowDown, ArrowRight, ArrowUp, CheckCircle2, Circle, CircleDashed, XCircle, Rocket, Flag, Zap } from 'lucide-react';
 
 export const statuses = [
   {
@@ -40,3 +41,21 @@ export const priorities = [
     icon: ArrowUp,
   },
 ];
+
+export const sprintStatuses = [
+  {
+    value: 'planning',
+    label: 'Planning',
+    icon: Flag,
+  },
+  {
+    value: 'active',
+    label: 'Active',
+    icon: Rocket,
+  },
+    {
+    value: 'completed',
+    label: 'Completed',
+    icon: CheckCircle2,
+  },
+]

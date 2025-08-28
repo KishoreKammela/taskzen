@@ -1,4 +1,5 @@
-import type { Project, Task } from '@/types';
+
+import type { Project, Task, Sprint } from '@/types';
 import { FileText, Code, Home } from 'lucide-react';
 
 export const projects: Project[] = [
@@ -7,6 +8,50 @@ export const projects: Project[] = [
   { id: 'PROJ-3', name: 'Documentation', icon: FileText },
 ];
 
+export const sprints: Sprint[] = [
+  {
+    id: 'SPR-1',
+    name: 'August Sprint #1 (2024)',
+    status: 'active',
+    goal: 'Launch V2 of the marketing website and improve performance by 15%.',
+    startDate: new Date('2024-08-01T00:00:00.000Z'),
+    endDate: new Date('2024-08-14T23:59:59.000Z'),
+    organizationId: 'default-org',
+    createdBy: 'user-1',
+  },
+  {
+    id: 'SPR-2',
+    name: 'July Sprint #2 (2024)',
+    status: 'completed',
+    goal: 'Complete the API integration with the new payment provider.',
+    startDate: new Date('2024-07-15T00:00:00.000Z'),
+    endDate: new Date('2024-07-31T23:59:59.000Z'),
+    organizationId: 'default-org',
+    createdBy: 'user-1',
+  },
+  {
+    id: 'SPR-3',
+    name: 'August Sprint #2 (2024)',
+    status: 'planning',
+    goal: 'Develop the initial draft of the public API documentation.',
+    startDate: new Date('2024-08-15T00:00:00.000Z'),
+    endDate: new Date('2024-08-30T23:59:59.000Z'),
+    organizationId: 'default-org',
+    createdBy: 'user-2',
+  },
+    {
+    id: 'SPR-4',
+    name: 'July Sprint #1 (2024)',
+    status: 'completed',
+    goal: 'Redesign the main dashboard and user profile pages.',
+    startDate: new Date('2024-07-01T00:00:00.000Z'),
+    endDate: new Date('2024-07-14T23:59:59.000Z'),
+    organizationId: 'default-org',
+    createdBy: 'user-1',
+  },
+];
+
+
 export const tasks: Task[] = [
   {
     id: 'TASK-8782',
@@ -14,6 +59,7 @@ export const tasks: Task[] = [
     status: 'todo',
     priority: 'medium',
     project: 'Website Redesign',
+    sprintId: 'SPR-1',
     dueDate: '2024-08-15',
   },
   {
@@ -22,6 +68,7 @@ export const tasks: Task[] = [
     status: 'in-progress',
     priority: 'high',
     project: 'API Integration',
+    sprintId: 'SPR-1',
     dueDate: '2024-08-01',
   },
   {
@@ -30,6 +77,7 @@ export const tasks: Task[] = [
     status: 'done',
     priority: 'medium',
     project: 'Website Redesign',
+    sprintId: 'SPR-2',
     dueDate: '2024-07-20',
   },
   {
@@ -38,6 +86,7 @@ export const tasks: Task[] = [
     status: 'canceled',
     priority: 'low',
     project: 'Documentation',
+    sprintId: 'SPR-3',
     dueDate: '2024-07-30',
   },
   {
@@ -46,6 +95,7 @@ export const tasks: Task[] = [
     status: 'todo',
     priority: 'high',
     project: 'Website Redesign',
+    sprintId: 'SPR-1',
     dueDate: '2024-09-01',
   },
   {
@@ -54,6 +104,7 @@ export const tasks: Task[] = [
     status: 'in-progress',
     priority: 'high',
     project: 'API Integration',
+    sprintId: 'SPR-1',
     dueDate: '2024-08-10',
   },
   {
@@ -62,6 +113,7 @@ export const tasks: Task[] = [
     status: 'done',
     priority: 'low',
     project: 'Website Redesign',
+    sprintId: 'SPR-2',
     dueDate: '2024-07-15',
   },
   {
@@ -70,6 +122,7 @@ export const tasks: Task[] = [
     status: 'todo',
     priority: 'medium',
     project: 'API Integration',
+    sprintId: 'SPR-3',
     dueDate: '2024-08-05',
   },
   {
@@ -78,6 +131,7 @@ export const tasks: Task[] = [
     status: 'in-progress',
     priority: 'low',
     project: 'Website Redesign',
+    sprintId: 'SPR-2',
     dueDate: '2024-07-28',
   },
   {
@@ -86,6 +140,7 @@ export const tasks: Task[] = [
     status: 'todo',
     priority: 'medium',
     project: 'Documentation',
+    sprintId: 'SPR-3',
     dueDate: '2024-09-15',
   },
 ];
