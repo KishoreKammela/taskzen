@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Cross2Icon, PlusCircledIcon } from '@radix-ui/react-icons';
+import { CheckIcon, PlusCircle, X } from 'lucide-react';
 import type { Column, Table } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,6 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
-import { CheckIcon } from 'lucide-react';
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -33,7 +32,7 @@ function DataTableFacetedFilter<TData, TValue>({ column, title, options }: DataT
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <PlusCircledIcon className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-2 h-4 w-4" />
           {title}
           {selectedValues?.size > 0 && (
             <>
@@ -136,7 +135,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
         {isFiltered && (
           <Button variant="ghost" onClick={() => table.resetColumnFilters()} className="h-8 px-2 lg:px-3">
             Reset
-            <Cross2Icon className="ml-2 h-4 w-4" />
+            <X className="ml-2 h-4 w-4" />
           </Button>
         )}
       </div>
