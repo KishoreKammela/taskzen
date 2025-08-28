@@ -18,6 +18,7 @@ export const sprints: Sprint[] = [
     endDate: new Date('2024-08-14T23:59:59.000Z'),
     organizationId: 'default-org',
     createdBy: 'user-1',
+    capacity: 40,
   },
   {
     id: 'SPR-2',
@@ -28,6 +29,7 @@ export const sprints: Sprint[] = [
     endDate: new Date('2024-07-31T23:59:59.000Z'),
     organizationId: 'default-org',
     createdBy: 'user-1',
+    capacity: 55,
   },
   {
     id: 'SPR-3',
@@ -38,6 +40,7 @@ export const sprints: Sprint[] = [
     endDate: new Date('2024-08-30T23:59:59.000Z'),
     organizationId: 'default-org',
     createdBy: 'user-2',
+    capacity: 50,
   },
     {
     id: 'SPR-4',
@@ -48,6 +51,7 @@ export const sprints: Sprint[] = [
     endDate: new Date('2024-07-14T23:59:59.000Z'),
     organizationId: 'default-org',
     createdBy: 'user-1',
+    capacity: 60,
   },
 ];
 
@@ -61,6 +65,7 @@ export const tasks: Task[] = [
     project: 'Website Redesign',
     sprintId: 'SPR-1',
     dueDate: '2024-08-15',
+    storyPoints: 8,
   },
   {
     id: 'TASK-7878',
@@ -70,6 +75,7 @@ export const tasks: Task[] = [
     project: 'API Integration',
     sprintId: 'SPR-1',
     dueDate: '2024-08-01',
+    storyPoints: 5,
   },
   {
     id: 'TASK-4567',
@@ -79,6 +85,7 @@ export const tasks: Task[] = [
     project: 'Website Redesign',
     sprintId: 'SPR-2',
     dueDate: '2024-07-20',
+    storyPoints: 13,
   },
   {
     id: 'TASK-2345',
@@ -86,8 +93,9 @@ export const tasks: Task[] = [
     status: 'canceled',
     priority: 'low',
     project: 'Documentation',
-    sprintId: 'SPR-3',
+    sprintId: undefined, // In backlog
     dueDate: '2024-07-30',
+    storyPoints: 8,
   },
   {
     id: 'TASK-9876',
@@ -97,6 +105,7 @@ export const tasks: Task[] = [
     project: 'Website Redesign',
     sprintId: 'SPR-1',
     dueDate: '2024-09-01',
+    storyPoints: 8,
   },
   {
     id: 'TASK-5432',
@@ -106,6 +115,7 @@ export const tasks: Task[] = [
     project: 'API Integration',
     sprintId: 'SPR-1',
     dueDate: '2024-08-10',
+    storyPoints: 13,
   },
   {
     id: 'TASK-1011',
@@ -115,6 +125,7 @@ export const tasks: Task[] = [
     project: 'Website Redesign',
     sprintId: 'SPR-2',
     dueDate: '2024-07-15',
+    storyPoints: 5,
   },
   {
     id: 'TASK-1213',
@@ -124,6 +135,7 @@ export const tasks: Task[] = [
     project: 'API Integration',
     sprintId: 'SPR-3',
     dueDate: '2024-08-05',
+    storyPoints: 3,
   },
   {
     id: 'TASK-1415',
@@ -133,6 +145,7 @@ export const tasks: Task[] = [
     project: 'Website Redesign',
     sprintId: 'SPR-2',
     dueDate: '2024-07-28',
+    storyPoints: 2,
   },
   {
     id: 'TASK-1617',
@@ -142,5 +155,36 @@ export const tasks: Task[] = [
     project: 'Documentation',
     sprintId: 'SPR-3',
     dueDate: '2024-09-15',
+    storyPoints: 5,
+  },
+  {
+    id: 'TASK-3001',
+    title: 'Refactor legacy CSS files',
+    status: 'todo',
+    priority: 'low',
+    project: 'Website Redesign',
+    sprintId: undefined, // In backlog
+    dueDate: '2024-10-01',
+    storyPoints: 13,
+  },
+  {
+    id: 'TASK-3002',
+    title: 'Add E2E tests for login flow',
+    status: 'todo',
+    priority: 'medium',
+    project: 'API Integration',
+    sprintId: undefined, // In backlog
+    dueDate: '2024-09-20',
+    storyPoints: 8,
+  },
+  {
+    id: 'TASK-3003',
+    title: 'Performance audit of main dashboard',
+    status: 'todo',
+    priority: 'high',
+    project: 'Website Redesign',
+    sprintId: undefined, // In backlog
+    dueDate: '2024-09-05',
+    storyPoints: 5,
   },
 ];

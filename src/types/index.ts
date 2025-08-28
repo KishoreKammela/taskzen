@@ -34,6 +34,7 @@ export interface Sprint {
   status: 'planning' | 'active' | 'completed';
   organizationId: string;
   createdBy: string; // userId
+  capacity?: number;
 }
 
 export type Task = {
@@ -48,6 +49,7 @@ export type Task = {
   dueDate?: string;
   estimatedHours?: number;
   actualHours?: number;
+  storyPoints?: number;
   createdAt?: Date;
   updatedAt?: Date;
 };

@@ -13,6 +13,7 @@ import {
   LifeBuoy,
   LayoutGrid,
   Sparkles,
+  KanbanSquare,
 } from 'lucide-react';
 import {
   SidebarHeader,
@@ -28,6 +29,7 @@ import {
 const mainNav = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/sprints', label: 'Sprints', icon: Calendar },
+  { href: '/sprint-planning', label: 'Planning', icon: KanbanSquare },
   { href: '/backlog', label: 'Backlog', icon: Box },
   { href: '/tasks', label: 'Tasks', icon: LayoutGrid },
   { href: '/reports', label: 'Reports', icon: BarChart2 },
@@ -38,7 +40,7 @@ export default function SidebarNav() {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
-    return pathname === path;
+    return pathname.startsWith(path);
   };
 
   return (
