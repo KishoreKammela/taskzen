@@ -38,8 +38,8 @@ export default function RegisterPage() {
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     setIsLoading(true);
     try {
-      await createUserWithEmailAndPassword(auth, values.email, values.password);
-      const token = await auth.currentUser?.getIdToken();
+      const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const token = await userCredential.user.getIdToken();
 
       await fetch('/api/auth/session', {
         method: 'POST',
@@ -48,6 +48,7 @@ export default function RegisterPage() {
       });
 
       router.push('/dashboard');
+      router.refresh();
     } catch (error: any) {
       toast({
         variant: 'destructive',

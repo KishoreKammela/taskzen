@@ -38,8 +38,8 @@ export default function LoginPage() {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-      const token = await auth.currentUser?.getIdToken();
+      const userCredential = await signInWithEmailAndPassword(auth, values.email, values.password);
+      const token = await userCredential.user.getIdToken();
       
       // Set cookie
       await fetch('/api/auth/session', {
@@ -49,6 +49,7 @@ export default function LoginPage() {
       });
 
       router.push('/dashboard');
+      router.refresh(); // Force a refresh to ensure layout and middleware re-evaluate
     } catch (error: any) {
       toast({
         variant: 'destructive',

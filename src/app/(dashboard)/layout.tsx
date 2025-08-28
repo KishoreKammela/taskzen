@@ -33,6 +33,7 @@ export default function DashboardLayout({
   }
 
   if (!user) {
+    // Return null or a loading indicator while redirecting
     return null;
   }
 
