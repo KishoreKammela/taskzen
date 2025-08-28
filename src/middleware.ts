@@ -2,7 +2,15 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Set this to true to bypass authentication for development purposes.
+// REMEMBER to set this back to false for production.
+const BYPASS_AUTH = true;
+
 export function middleware(request: NextRequest) {
+  if (BYPASS_AUTH) {
+    return NextResponse.next();
+  }
+
   const sessionToken = request.cookies.get('firebase-session');
   const { pathname } = request.nextUrl;
 
