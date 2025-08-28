@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
+import { createUser } from '@/services/firestore';
 
 const registerSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
@@ -39,7 +40,11 @@ export default function RegisterPage() {
     setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-      const token = await userCredential.user.getIdToken();
+      const { user } = userCredential;
+      const token = await user.getIdToken();
+      
+      // Create user document in Firestore
+      await createUser(user.uid, { email: user.email! });
 
       await fetch('/api/auth/session', {
         method: 'POST',
